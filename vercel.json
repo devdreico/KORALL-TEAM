@@ -1,0 +1,5 @@
+{
+  "installCommand": "npm install --prefix korall-web",
+  "buildCommand": "npm run build --prefix korall-web",
+  "outputDirectory": "korall-web/dist"
+}
