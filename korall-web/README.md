@@ -1,32 +1,20 @@
-# React + TypeScript + Vite
+# Korall Team
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Interfaz de coordinación para el equipo de e-sports y deportes Korall.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Verificación local:
+
+```bash
+npm test
+npm run lint
+npm run build
+```
+
+El despliegue en Vercel se configura desde la raíz del repositorio mediante `../vercel.json`. Si el proyecto de Vercel usa `korall-web` como raíz, configura el comando `npm run build` y la salida `dist`.
+
+El tema claro/oscuro se recuerda por navegador. Las coordinaciones siguen siendo datos locales de demostración y no están sincronizadas entre miembros del equipo.

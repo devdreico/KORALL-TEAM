@@ -16,11 +16,13 @@ import {
   LayoutDashboard,
   MapPin,
   Menu,
+  Moon,
   Plus,
   Radio,
   Search,
   ShieldCheck,
   Trophy,
+  Sun,
   Users,
   X,
 } from 'lucide-react'
@@ -43,7 +45,20 @@ const navigation = [
   { label: 'Coordinaciones', icon: CalendarDays, target: 'operations' },
 ]
 
+type Theme = 'light' | 'dark'
+
+function readThemePreference(): Theme {
+  try {
+    const savedTheme = window.localStorage.getItem('korall.theme.v1')
+    if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  } catch {
+    return 'light'
+  }
+}
+
 function App() {
+  const [theme, setTheme] = useState<Theme>(readThemePreference)
   const [activeSection, setActiveSection] = useState('overview')
   const [sectorFilter, setSectorFilter] = useState<SectorFilter>('all')
   const [search, setSearch] = useState('')
@@ -61,6 +76,20 @@ function App() {
   const [newDescription, setNewDescription] = useState('')
   const dialogRef = useRef<HTMLElement>(null)
   const isDialogOpen = isModalOpen || selectedCoordination !== null
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document.documentElement.style.colorScheme = theme
+    document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute(
+      'content',
+      theme === 'dark' ? '#111111' : '#f3f3f3',
+    )
+    try {
+      window.localStorage.setItem('korall.theme.v1', theme)
+    } catch {
+      return
+    }
+  }, [theme])
 
   useEffect(() => {
     if (!isDialogOpen) return
@@ -162,22 +191,17 @@ function App() {
     <div className="app-shell">
       <aside className={`sidebar ${isMobileNavOpen ? 'sidebar-open' : ''}`}>
         <a className="brand-lockup" href="#overview" onClick={() => navigateTo('overview')}>
-          <span className="brand-mark" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </span>
           <span className="brand-name-wrap">
             <span className="brand-name">KORALL</span>
-            <span className="brand-caption">GLOBAL HOLDING</span>
+            <span className="brand-caption">E-SPORTS · SPORTS</span>
           </span>
         </a>
 
         <div className="workspace-switcher">
           <span className="workspace-icon"><Globe2 size={16} /></span>
           <span className="workspace-copy">
-            <span>Workspace</span>
-            <strong>Korall Global</strong>
+            <span>Equipo</span>
+            <strong>Korall Competitive</strong>
           </span>
           <ChevronDown size={15} className="workspace-chevron" />
         </div>
@@ -221,7 +245,7 @@ function App() {
         <div className="origin-card">
           <div className="origin-icon"><MapPin size={15} /></div>
           <div>
-            <span className="origin-label">ORIGEN</span>
+            <span className="origin-label">BASE DEL EQUIPO</span>
             <strong>Vancouver, EE. UU.</strong>
           </div>
           <span className="origin-pulse" aria-label="Sede de origen" />
@@ -245,9 +269,17 @@ function App() {
             aria-label="Abrir navegación"
             onClick={() => setIsMobileNavOpen(true)}
           ><Menu size={19} /></button>
-          <div className="breadcrumb"><span>Korall Global</span><ChevronRight size={14} /><strong>Centro de coordinación</strong></div>
+          <div className="breadcrumb"><span>Korall Team</span><ChevronRight size={14} /><strong>Centro de coordinación</strong></div>
           <div className="topbar-actions">
-            <span className="concept-tag"><span /> VISIÓN DE MARCA</span>
+            <span className="concept-tag"><span /> E-SPORTS + SPORTS</span>
+            <button
+              type="button"
+              className="icon-button theme-toggle"
+              aria-label={`Cambiar a modo ${theme === 'light' ? 'oscuro' : 'claro'}`}
+              title={`Cambiar a modo ${theme === 'light' ? 'oscuro' : 'claro'}`}
+              aria-pressed={theme === 'dark'}
+              onClick={() => setTheme((current) => current === 'light' ? 'dark' : 'light')}
+            >{theme === 'light' ? <Moon size={17} /> : <Sun size={17} />}</button>
             <div className="notification-wrap">
               <button
                 type="button"
@@ -270,11 +302,11 @@ function App() {
 
         <div className="page-content">
           <section className="intro-section" id="overview">
-            <div className="eyebrow"><span className="eyebrow-line" /> HOLDING · COMUNIDAD · COMPETENCIA</div>
+            <div className="eyebrow"><span className="eyebrow-line" /> EQUIPO · COMPETENCIA · CRECIMIENTO</div>
             <div className="intro-row">
               <div>
-                <h1>Las personas mueven<br className="desktop-break" /> el juego. <span>Korall las conecta.</span></h1>
-                <p className="intro-copy">Un holding nacido en Vancouver que coordina comunidades, afiliados y experiencias deportivas a través de fronteras.</p>
+                <h1>Competimos juntos.<br className="desktop-break" /> <span>Crecemos sin fronteras.</span></h1>
+                <p className="intro-copy">Desde Vancouver, Korall une talento de e-sports y deportes con una mentalidad competitiva, comunitaria y hecha para llegar más lejos.</p>
               </div>
               <button type="button" className="primary-button intro-cta" onClick={() => setIsModalOpen(true)}>
                 <Plus size={17} /> Nueva coordinación
@@ -301,7 +333,7 @@ function App() {
           <section className="overview-grid" id="network" aria-label="Red internacional de Korall">
             <div className="glass-panel network-panel">
               <div className="panel-heading">
-                <div><span className="section-kicker">PRESENCIA</span><h2>Una red. Muchos terrenos.</h2></div>
+                <div><span className="section-kicker">PRESENCIA DEL EQUIPO</span><h2>Una comunidad. Muchos escenarios.</h2></div>
                 <button type="button" className="subtle-icon-button" aria-label="Ver divisiones" onClick={() => navigateTo('divisions')}><ArrowUpRight size={17} /></button>
               </div>
               <div className="network-map">
@@ -345,7 +377,7 @@ function App() {
               <div className="mission-copy">
                 <span className="mission-index">01 / 03</span>
                 <h2>La comunidad<br />es el <em>centro</em>.</h2>
-                <p>Conectamos personas y oportunidades para que el talento local llegue más lejos, dentro y fuera de la cancha.</p>
+                <p>Construimos oportunidades para competir, representar y crecer juntos: en el juego, en la cancha y en cada comunidad.</p>
               </div>
               <div className="mission-divider" />
               <div className="mission-meta"><span>ENFOQUE</span><strong>Participación con propósito</strong></div>
@@ -356,27 +388,27 @@ function App() {
 
           <section className="divisions-section" id="divisions">
             <div className="section-heading-row">
-              <div><span className="section-kicker">ECOSISTEMA KORALL</span><h2>Dos mundos. Una misma energía.</h2></div>
-              <span className="section-aside">DIVISIONES DEL HOLDING <ArrowDownRight size={15} /></span>
+              <div><span className="section-kicker">EL EQUIPO KORALL</span><h2>Dos disciplinas. Una misma ambición.</h2></div>
+              <span className="section-aside">CRECER MÁS ALLÁ DE HOY <ArrowDownRight size={15} /></span>
             </div>
             <div className="division-grid">
               <article className="division-card gaming-card">
                 <div className="division-card-top"><span className="division-icon gaming-icon"><Radio size={19} /></span><span className="division-number">01</span></div>
-                <div className="division-body"><span className="division-label">KORALL · DIGITAL</span><h3>Gaming &amp;<br />afiliados</h3><p>Una red internacional de afiliados que conecta comunidades de juego, creadores y oportunidades competitivas.</p></div>
+                <div className="division-body"><span className="division-label">KORALL · E-SPORTS</span><h3>La arena<br />competitiva</h3><p>Comunidad y afiliados en distintos juegos, unidos para crear oportunidades de participación y competencia.</p></div>
                 <div className="division-footer"><span><span className="status-indicator" /> Red global</span><button type="button" aria-label="Filtrar coordinaciones de gaming" onClick={() => { setSectorFilter('gaming'); navigateTo('operations') }}><ArrowUpRight size={17} /></button></div>
                 <span className="division-watermark gaming-watermark" aria-hidden="true">K·G</span>
               </article>
               <article className="division-card football-card">
                 <div className="division-card-top"><span className="division-icon football-icon"><Goal size={20} /></span><span className="division-number">02</span></div>
-                <div className="division-body"><span className="division-label">KORALL · COMUNIDAD</span><h3>Microfútbol<br />en movimiento</h3><p>Afiliados físicos en Colombia y Brasil acercan el deporte, la participación y la competencia a cada comunidad.</p></div>
+                <div className="division-body"><span className="division-label">KORALL · SPORTS</span><h3>El juego<br />en la cancha</h3><p>Afiliados de microfútbol en Colombia y Brasil llevan el deporte y la competencia al corazón de cada comunidad.</p></div>
                 <div className="division-footer"><span><span className="status-indicator status-coral" /> Colombia · Brasil</span><button type="button" aria-label="Filtrar coordinaciones de microfútbol" onClick={() => { setSectorFilter('football'); navigateTo('operations') }}><ArrowUpRight size={17} /></button></div>
                 <span className="division-watermark football-watermark" aria-hidden="true">K·F</span>
               </article>
-              <article className="division-card holding-card">
-                <div className="division-card-top"><span className="division-icon holding-icon"><ShieldCheck size={19} /></span><span className="division-number">03</span></div>
-                <div className="division-body"><span className="division-label">KORALL · HOLDING</span><h3>Una visión<br />compartida</h3><p>Coordinación, identidad y alianzas para que cada iniciativa crezca con raíces locales y alcance global.</p></div>
-                <div className="division-footer"><span><span className="status-indicator status-blue" /> Desde Vancouver</span><button type="button" aria-label="Ver red de Korall" onClick={() => navigateTo('network')}><ArrowUpRight size={17} /></button></div>
-                <span className="division-watermark holding-watermark" aria-hidden="true">K·H</span>
+              <article className="division-card growth-card">
+                <div className="division-card-top"><span className="division-icon growth-icon"><ShieldCheck size={19} /></span><span className="division-number">03</span></div>
+                <div className="division-body"><span className="division-label">KORALL · PRÓXIMO NIVEL</span><h3>El siguiente<br />capítulo</h3><p>Identificar talento, fortalecer alianzas y abrir nuevos caminos para que el equipo siga evolucionando.</p></div>
+                <div className="division-footer"><span><span className="status-indicator status-blue" /> Ambición global</span><button type="button" aria-label="Ver red de Korall" onClick={() => navigateTo('network')}><ArrowUpRight size={17} /></button></div>
+                <span className="division-watermark growth-watermark" aria-hidden="true">K+</span>
               </article>
             </div>
           </section>
@@ -421,7 +453,7 @@ function App() {
             </div>
           </section>
 
-          <footer className="page-footer"><span>© 2026 KORALL GLOBAL HOLDING</span><span><Users size={14} /> Personas primero. Siempre.</span><a href="#overview" onClick={() => navigateTo('overview')}>Volver arriba <ArrowUpRight size={13} /></a></footer>
+          <footer className="page-footer"><span>© 2026 KORALL TEAM</span><span><Users size={14} /> Personas primero. Competimos juntos.</span><a href="#overview" onClick={() => navigateTo('overview')}>Volver arriba <ArrowUpRight size={13} /></a></footer>
         </div>
       </main>
 

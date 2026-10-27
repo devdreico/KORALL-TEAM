@@ -1,8 +1,8 @@
 # KORALL TEAM
 
-Concepto de una plataforma de coordinación para Korall Global Holding: una iniciativa nacida en Vancouver, EE. UU., con una red internacional de afiliados gaming y afiliados físicos de microfútbol en Colombia y Brasil.
+Concepto de una plataforma para Korall, un equipo de e-sports y deportes nacido en Vancouver, EE. UU., con afiliados gaming internacionales y presencia física de microfútbol en Colombia y Brasil. La marca busca ampliar su alcance y crecer más allá de sus frentes actuales.
 
-La sede, los frentes y las coordinaciones que aparecen en la interfaz son una narrativa de marca y datos demostrativos. No representan cifras, entidades jurídicas, alianzas ni operaciones verificadas. Confirmar nombres, ubicaciones, estructura y actividad antes de publicar como información factual.
+La sede, los frentes y las coordinaciones que aparecen en la interfaz son una narrativa de marca y datos demostrativos. No representan cifras, entidades jurídicas, alianzas ni operaciones verificadas. Confirmar nombres, ubicaciones, estructura, el logo oficial y actividad antes de publicar como información factual. El repositorio todavía no contiene el logo oficial de Korall.
 
 ## Aplicación
 

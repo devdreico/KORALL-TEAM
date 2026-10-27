@@ -1,7 +1,7 @@
 :root {
   font-family: 'DM Sans', sans-serif;
-  color: #172521;
-  background: #f3f7f5;
+  color: #1b1b1b;
+  background: #f3f3f3;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -9,17 +9,17 @@
   font-optical-sizing: auto;
   font-weight: 400;
 
-  --ink: #172521;
-  --ink-soft: #586762;
-  --muted: #82908a;
-  --line: rgba(30, 59, 49, 0.11);
-  --paper: #f3f7f5;
+  --ink: #1b1b1b;
+  --ink-soft: #5f5f5f;
+  --muted: #858585;
+  --line: rgba(0, 0, 0, 0.12);
+  --paper: #f3f3f3;
   --glass: rgba(255, 255, 255, 0.68);
-  --green: #157b63;
-  --mint: #72dfc4;
-  --coral: #e88870;
-  --blue: #6a88c8;
-  --shadow: 0 18px 55px rgba(27, 55, 45, 0.075);
+  --green: #525252;
+  --mint: #bdbdbd;
+  --coral: #8d8d8d;
+  --blue: #737373;
+  --shadow: 0 18px 55px rgba(0, 0, 0, 0.08);
 }
 
 * { box-sizing: border-box; }
@@ -28,9 +28,8 @@ body {
   min-width: 360px;
   margin: 0;
   background:
-    radial-gradient(ellipse at 68% 3%, rgba(166, 223, 204, 0.24), transparent 34%),
-    radial-gradient(ellipse at 90% 60%, rgba(210, 224, 238, 0.19), transparent 36%),
-    linear-gradient(145deg, #f8faf8 0%, #f0f5f2 54%, #f6f8f6 100%);
+    radial-gradient(ellipse at 72% 5%, rgba(0, 0, 0, 0.035), transparent 35%),
+    linear-gradient(145deg, #fafafa 0%, #efefef 54%, #f6f6f6 100%);
   color: var(--ink);
   font-size: 14px;
   line-height: 1.5;
@@ -39,11 +38,11 @@ body, button, input, select { font-family: inherit; }
 button, a, input, select { -webkit-tap-highlight-color: transparent; }
 button { color: inherit; }
 a { color: inherit; text-decoration: none; }
-button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
-  outline: 3px solid rgba(21, 123, 99, 0.38);
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.42);
   outline-offset: 3px;
 }
-::selection { color: #12392e; background: rgba(114, 223, 196, 0.48); }
+::selection { color: #111; background: rgba(0, 0, 0, 0.14); }
 #root { min-height: 100svh; }
 .sr-only {
   position: absolute;
@@ -56,6 +55,18 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   white-space: nowrap;
   border: 0;
 }
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+  color: #ededed;
+  background: #111;
+}
+html[data-theme='dark'] body {
+  color: #ededed;
+  background: radial-gradient(ellipse at 70% 0%, #252525 0%, transparent 42%), #111;
+}
+html[data-theme='dark'] ::selection { color: #fff; background: rgba(255,255,255,.2); }
+html[data-theme='light'] { color-scheme: light; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
